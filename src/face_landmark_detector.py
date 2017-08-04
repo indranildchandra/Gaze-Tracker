@@ -1,10 +1,15 @@
 import logging
+import os
 import cv2
 import dlib
 import numpy as np
 from pose_estimator import estimatePose
 
-shape_predictor_path = "res\shape_predictor_68_face_landmarks.dat"
+script_directory_path = os.path.dirname(os.path.realpath(__file__)) # absolute dir the script is in
+shape_predictor_relative_path = "../resources/shape_predictor_68_face_landmarks.dat"
+shape_predictor_path = os.path.join(script_directory_path, shape_predictor_relative_path)
+
+#shape_predictor_path = "resources\shape_predictor_68_face_landmarks.dat"
 
 def detectFaceLandmark(img):
     detector = dlib.get_frontal_face_detector()
