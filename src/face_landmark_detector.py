@@ -3,7 +3,7 @@ import os
 import cv2
 import dlib
 import numpy as np
-from pose_estimator import estimatePose
+from gaze_estimator import estimateGaze
 
 script_directory_path = os.path.dirname(os.path.realpath(__file__)) # absolute dir the script is in
 shape_predictor_relative_path = "../resources/shape_predictor_68_face_landmarks.dat"
@@ -65,7 +65,7 @@ def detectFaceLandmark(img):
         logging.info("Facial Landmark Features:\n" + str(facialLandmarkFeatures))
 
         # Get Pose Estimate
-        [noseImagePoint, noseEndPointProjection2D] = estimatePose(img, facialLandmarkFeatures)
+        [noseImagePoint, noseEndPointProjection2D] = estimateGaze(img, facialLandmarkFeatures)
 
         logging.info("Nose Image Point Coordinate: " + str(noseImagePoint))
         logging.info("Nose End Point Projection 2D Coordinate: " + str(noseEndPointProjection2D))
@@ -79,7 +79,7 @@ def detectFaceLandmark(img):
         # Display Pose Direction in 2D Image Plane
         cv2.line(img, noseImagePoint, noseEndPointProjection2D, (255,0,0), 2)
         # Display image
-        cv2.imshow("Output with Pose Estimation", img)
+        cv2.imshow("Output with Gaze Estimation", img)
 
     return img
     

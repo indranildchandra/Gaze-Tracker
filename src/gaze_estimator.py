@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 
 
-def estimatePose(image, image_points):
+def estimateGaze(image, image_points):
     size = image.shape
 
     # 3D model points.

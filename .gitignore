@@ -1,0 +1,6 @@
+# Directories to be excluded
+#OutputFolder/
+src/__pycache__/
+.idea/
+
+# Files to be excluded

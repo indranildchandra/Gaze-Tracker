@@ -10,7 +10,9 @@ from face_landmark_detector import detectFaceLandmark
 # Set these variables
 frameRate = 5.0 #in Frames per Second (FPS)
 frameResolution = (640, 480) #Set (980,720)) for higher resolution
-output_directory_path = os.path.join(os.path.join(os.path.join(os.path.dirname(os.path.realpath(__file__)), "../OutputFolder"), "TestSubjectName"), "TestNumber") 
+test_subject_name = "test"
+test_number = "1"
+output_directory_path = os.path.join(os.path.join(os.path.join(os.path.dirname(os.path.realpath(__file__)), "../output"), test_subject_name), test_number) 
 #Change ChildName and TestNumber with each iteration of testing
 
 source_directory_path = os.path.dirname(os.path.realpath(__file__))
@@ -35,33 +37,32 @@ if not(cap.isOpened()):	#Sanity Check if the Video Capture Object was initiated
 filePathName = os.path.join(output_directory_path, ((fileName.replace("-","_").replace(" ","-").replace(":","_")).split('.'))[0]) # example -> path/yyyy_mm_dd-hh_mm_ss
 recordedFileName = filePathName + "_capture" + ".avi"
 outputFileName = filePathName + "_output" + ".avi"
-fourcc = cv2.VideoWriter_fourcc(*'XVID')  #FourCC is a 4-byte code used to specify the video codec.
-videoWriterObj1 = cv2.VideoWriter(recordedFileName, -1, frameRate, frameResolution) 
-videoWriterObj2 = cv2.VideoWriter(outputFileName, -1, frameRate, frameResolution)
-# Frame Rate (in FPS) is equal to 5, hence we should wait 1/5 seconds = 0.2 seconds = 0.2 * 1000 milliseconds = 200 milliseconds between the consecutive frames. 
-# So put waitKey(200)
 
-while True:
-	keyPressed = cv2.waitKey(int(1000/frameRate))
-	if (keyPressed == ord('q')) or (keyPressed == ord('Q')):
-		logging.info("Application Terminated!")
-		logging.info("----------------------------------------------------------------")
-		logging.info("----------------------------------------------------------------")
-		break
-	else:
-		returnStatus, frame = cap.read()
-		videoWriterObj1.write(frame)
-		if returnStatus == True:
-	   		outputImage = detectFaceLandmark(frame)
-	   		videoWriterObj2.write(outputImage)
-	   		logging.info("Captured Frame and Output Image written to Video file")
-	   		logging.info("----------------------------------------------------------------")
-	   		logging.info("----------------------------------------------------------------")
-		else:
-			logging.info("Return Status = False")
+try:
+	videoWriterObj1 = cv2.VideoWriter(recordedFileName, cv2.VideoWriter_fourcc('M','J','P','G'), frameRate, frameResolution) 
+	videoWriterObj2 = cv2.VideoWriter(outputFileName, cv2.VideoWriter_fourcc('M','J','P','G'), frameRate, frameResolution)
 
+	while cv2.waitKey(1) < 0:
+	    has_frame, frame = cap.read()
 
-videoWriterObj1.release()
-videoWriterObj2.release()
-cap.release()
-cv2.destroyAllWindows()
+	    if not has_frame: #(keyPressed == ord('q')) or (keyPressed == ord('Q'))
+	    	logging.info("No frame returned...")
+	    	logging.info("Application Terminated!")
+	    	logging.info("----------------------------------------------------------------")
+	    	logging.info("----------------------------------------------------------------")
+	    	break
+
+	    videoWriterObj1.write(frame)
+	    outputImage = detectFaceLandmark(frame)
+	    videoWriterObj2.write(outputImage)
+	    logging.info("Captured Frame and Output Image written to Video file")
+	    logging.info("----------------------------------------------------------------")
+	    logging.info("----------------------------------------------------------------")
+except Exception as e:
+	logging.error("An Exception occured!")
+	logging.error(str(e))
+finally:
+	videoWriterObj1.release()
+	videoWriterObj2.release()
+	cap.release()
+	cv2.destroyAllWindows()
