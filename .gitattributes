@@ -1,6 +1,5 @@
 # Handle line endings automatically for files detected as text and leave all files detected as binary untouched.
 * text=auto
-
 # These files are text and should be normalized (Convert crlf => lf)
 *.md	text
 *.MD	text
@@ -10,7 +9,6 @@
 *.TXT 	text
 *.xml 	text
 *.XML 	text
-
 # Documents
 *.doc	diff=astextplain
 *.DOC	diff=astextplain
@@ -22,7 +20,6 @@
 *.PDF	diff=astextplain
 *.rtf	diff=astextplain
 *.RTF	diff=astextplain
-
 # Graphics
 *.png 	binary
 *.jpg 	binary
@@ -31,7 +28,9 @@
 *.tif 	binary
 *.tiff 	binary
 *.ico 	binary
-
+# Media
+*.mp4 filter=lfs diff=lfs merge=lfs -text
+*.avi filter=lfs diff=lfs merge=lfs -text
 # Source files
 *.pxd	text
 *.py 	text
