@@ -11,9 +11,10 @@ shape_predictor_path = os.path.join(script_directory_path, shape_predictor_relat
 
 #shape_predictor_path = "resources\shape_predictor_68_face_landmarks.dat"
 
+predictor = dlib.shape_predictor(shape_predictor_path)
+
 def detectFaceLandmark(img):
     detector = dlib.get_frontal_face_detector()
-    predictor = dlib.shape_predictor(shape_predictor_path)
 
 
     # Ask the detector to find the bounding boxes of each face. The 1 in the
@@ -82,6 +83,3 @@ def detectFaceLandmark(img):
         cv2.imshow("Output with Gaze Estimation", img)
 
     return img
-    
-
-
