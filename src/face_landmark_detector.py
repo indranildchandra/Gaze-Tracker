@@ -72,7 +72,4 @@ def detectFaceLandmark(img, detector, predictor):
 		cv2.imshow("Output with Gaze Estimation", img)
 
 	return img
-	
 
-
->>>>>>> Stashed changes
