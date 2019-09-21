@@ -4,3 +4,4 @@ src/__pycache__/
 .idea/
 
 # Files to be excluded
+resources/*.dat
