@@ -1,4 +1,5 @@
 import logging
+import traceback
 import sys
 import os
 import glob
@@ -14,7 +15,7 @@ frameResolution = (980, 720) #Set (980,720)) for higher resolution
 test_subject_name = "test"
 test_number = "1"
 output_directory_path = os.path.join(os.path.join(os.path.join(os.path.dirname(os.path.realpath(__file__)), "../output"), test_subject_name), test_number) 
-#Change ChildName and TestNumber with each iteration of testing
+#Change SubjectName and TestNumber with each iteration of testing
 
 source_directory_path = os.path.dirname(os.path.realpath(__file__))
 output_directory_path = os.path.abspath(output_directory_path)
@@ -67,7 +68,7 @@ try:
 		logging.info("----------------------------------------------------------------")
 except Exception as e:
 	logging.error("An Exception occured!")
-	logging.error(str(e))
+	logging.error(str(traceback.format_exc()))
 finally:
 	videoWriterObj1.release()
 	videoWriterObj2.release()
